@@ -53,30 +53,6 @@ app.get('/cadastro', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'cadastro.html'));
 });
 
-// Rota para processar o formulário de cadastro
-app.post('/register', (req, res) => {
-  const { firstname, email, password } = req.body;
-
-  const query = 'INSERT INTO tb_proprietario (nome, email, senha) VALUES (?, ?, ?)';
-  db.query(query, [firstname, email, password], (err, result) => {
-    if (err) {
-      console.error('Erro ao inserir dados:', err);
-      res.status(500).send('Erro ao cadastrar.');
-    } 
-    if (results.length > 0) {
-      console.log('Usuário autenticado:', results[0]);
-      res.redirect('/cadastrar'); // Redireciona para a página de cadastro de locais
-    } else {
-      console.log('Dados inseridos com sucesso:', result);
-    }
-  });
-});
-
-// Inicia o servidor
-app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
-});
-
 
 // Rota para a página de login
 app.get('/login', (req, res) => {
@@ -84,7 +60,7 @@ app.get('/login', (req, res) => {
 });
 
 // Rota para processar o login
-app.post('/login', (req, res) => {
+app.post('/registro', (req, res) => {
   const { email, password } = req.body;
 
   const query = 'SELECT * FROM tb_proprietario WHERE email = ? AND senha = ?';
@@ -105,7 +81,7 @@ app.post('/login', (req, res) => {
 
 
 // Rota para cadastrar um local
-app.post('/cadastrar', (req, res) => {
+app.post('/cadastrarlocal', (req, res) => {
   const { endereco, tipoCamera, capacidade } = req.body;
 
   // Divide o endereço em partes, se necessário
